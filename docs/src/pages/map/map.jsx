@@ -45,18 +45,19 @@ function MyMap() {
 
         {selected && (
           <InfoWindow
-            position={{
-              lat: parseFloat(selected.latitude),
-              lng: parseFloat(selected.longitude)
-            }}
-            onCloseClick={() => setSelected(null)}
-          >
-            <div>
-              <h3>{selected.organiz_name || 'Food Bank'}</h3>
-              <p>{selected.address}</p>
-              <p>{selected.city}, {selected.state}</p>
-            </div>
-          </InfoWindow>
+  position={{
+    lat: parseFloat(selected.latitude),
+    lng: parseFloat(selected.longitude)
+  }}
+  onCloseClick={() => setSelected(null)}
+>
+  <div>
+    <h3>{selected.food_scrap_drop_off_site || 'Food Site'}</h3>
+    <p>{selected.location}</p>
+    <p>{selected.borough}</p>
+    <p>{selected.operation_day_hours}</p>
+  </div>
+</InfoWindow>
         )}
       </GoogleMap>
     </LoadScript>
