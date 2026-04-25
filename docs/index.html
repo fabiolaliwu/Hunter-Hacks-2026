@@ -2,49 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hunterhacks2026</title>
+    <title>HunterHacks 2026</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
-<header class="site-header">
-  <div class="header-top">
-    <a href="#" class="site-logo">home</a>
-  </div>
-</header>
-
-<main>
-  <section class="project">
-    <div class="project-label">
-    </div>
-    <div class="project-body">
-      <h1 class="project-title">h1 project title</h1>
-      <p class="project-dates"><span id="current-date"></span></p><p class="project-hours"><span id="current-time"></span></p>
-        <script>
-          // Date
-          const today = new Date();
-          document.getElementById('current-date').textContent = today.toDateString();
-        
-          // Time — updates every second
-          function updateTime() {
-            const now = new Date();
-            document.getElementById('current-time').textContent = now.toLocaleTimeString();
-          }
-          updateTime();
-          setInterval(updateTime, 1000);
-        </script>
-        <br>
-      
-      <p class="project-desc">
-        To make the city we call home more accessible to all. Whether it be your first time here or if you've lived here for a few years already. 
-
-      </p>
-      <a href="camera.html"><u>camera</u></a>
-      <a href="more.html"><u>map</u></a>
-    </div>
-  </section>

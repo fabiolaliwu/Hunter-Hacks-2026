@@ -1,0 +1,128 @@
+/* Base Layout */
+.ai-page-wrapper {
+  background-color: #0d0f12;
+  color: #00ff9d; /* Classic "Matrix" green */
+  font-family: 'Courier New', Courier, monospace;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.ai-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #1a1d23;
+  margin-bottom: 20px;
+}
+
+.highlight { color: #ffffff; }
+
+.status-badge {
+  background: rgba(0, 255, 157, 0.1);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid #00ff9d;
+}
+
+/* Content Grid */
+.ai-main-container {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+/* Visual Panel */
+.visual-panel {
+  background: #161a1f;
+  border: 1px solid #333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.camera-viewport {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.scan-effect {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #00ff9d;
+  box-shadow: 0 0 15px #00ff9d;
+  top: 0;
+  animation: scanMove 4s linear infinite;
+}
+
+.metadata {
+  padding: 10px;
+  background: #000;
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Interface Panel */
+.interface-panel {
+  background: #161a1f;
+  border: 1px solid #333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.chat-history {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.msg {
+  padding: 10px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.label { font-weight: bold; margin-right: 8px; }
+
+/* Input Area */
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.ai-input {
+  flex-grow: 1;
+  background: #000;
+  border: 1px solid #00ff9d;
+  padding: 12px;
+  color: #00ff9d;
+  outline: none;
+}
+
+.execute-btn {
+  background: #00ff9d;
+  color: #000;
+  border: none;
+  padding: 0 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes scanMove {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
