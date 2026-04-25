@@ -57,7 +57,7 @@ export default function App() {
           <a href="camera.html" className="btn btn-primary">
             ◎ CAMERA
           </a>
-          <a href="more.html" className="btn btn-secondary">
+          <a href="map.jsx" className="btn btn-secondary">
             ⊕ MAP
           </a>
         </div>
