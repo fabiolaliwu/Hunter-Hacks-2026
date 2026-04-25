@@ -1,0 +1,97 @@
+.ai-page {
+  background-color: #0f172a;
+  color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.ai-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(30, 41, 59, 0.8);
+  border-bottom: 1px solid #334155;
+}
+
+.logo { font-weight: 800; font-size: 1.5rem; }
+.logo span { color: #38bdf8; }
+
+.status { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.ai-container {
+  display: flex;
+  height: calc(100vh - 65px);
+}
+
+.ai-sidebar {
+  width: 250px;
+  background: #1e293b;
+  padding: 2rem 1rem;
+  border-right: 1px solid #334155;
+}
+
+.tool-btn {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #334155;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tool-btn.active { background: #38bdf8; color: #0f172a; font-weight: bold; }
+
+.ai-viewport {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.camera-box {
+  flex: 1;
+  background: #000;
+  border-radius: 12px;
+  border: 2px solid #334155;
+  position: relative;
+  overflow: hidden;
+}
+
+.camera-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.6);
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.capture-btn {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #38bdf8, #818cf8);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: center;
+}
+
+.output-console {
+  background: #020617;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #38bdf8;
+  height: 80px;
+}
