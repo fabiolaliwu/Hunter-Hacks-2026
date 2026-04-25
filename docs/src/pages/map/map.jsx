@@ -1,9 +1,9 @@
-// hm,...
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { useState, useEffect } from 'react';
+import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
-  height: '400px'
+  height: '90vh'
 };
 
 const center = {
@@ -12,14 +12,52 @@ const center = {
 };
 
 function MyMap() {
+  const [foodBanks, setFoodBanks] = useState([]);
+  const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    fetch('https://data.cityofnewyork.us/resource/if26-z6xq.json')
+      .then(res => res.json())
+      .then(data => setFoodBanks(data))
+      .catch(err => console.error('Error fetching food banks:', err));
+  }, []);
+
   return (
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={11}
       >
-        <Marker position={center} />
+        {foodBanks.map((bank, i) => {
+          const lat = parseFloat(bank.latitude);
+          const lng = parseFloat(bank.longitude);
+          if (!lat || !lng) return null;
+
+          return (
+            <Marker
+              key={i}
+              position={{ lat, lng }}
+              onClick={() => setSelected(bank)}
+            />
+          );
+        })}
+
+        {selected && (
+          <InfoWindow
+            position={{
+              lat: parseFloat(selected.latitude),
+              lng: parseFloat(selected.longitude)
+            }}
+            onCloseClick={() => setSelected(null)}
+          >
+            <div>
+              <h3>{selected.organiz_name || 'Food Bank'}</h3>
+              <p>{selected.address}</p>
+              <p>{selected.city}, {selected.state}</p>
+            </div>
+          </InfoWindow>
+        )}
       </GoogleMap>
     </LoadScript>
   );
