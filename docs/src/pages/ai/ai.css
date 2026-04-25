@@ -1,97 +1,55 @@
-.ai-page {
-  background-color: #0f172a;
-  color: #f8fafc;
+.simple-ai-page {
+  background-color: #ffffff;
+  color: #000000;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-}
-
-.ai-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  background: rgba(30, 41, 59, 0.8);
-  border-bottom: 1px solid #334155;
-}
-
-.logo { font-weight: 800; font-size: 1.5rem; }
-.logo span { color: #38bdf8; }
-
-.status { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
-.dot {
-  width: 10px;
-  height: 10px;
-  background: #22c55e;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #22c55e;
-}
-
-.ai-container {
-  display: flex;
-  height: calc(100vh - 65px);
-}
-
-.ai-sidebar {
-  width: 250px;
-  background: #1e293b;
-  padding: 2rem 1rem;
-  border-right: 1px solid #334155;
-}
-
-.tool-btn {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  background: #334155;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: left;
-}
-
-.tool-btn.active { background: #38bdf8; color: #0f172a; font-weight: bold; }
-
-.ai-viewport {
-  flex: 1;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  font-family: sans-serif;
 }
 
-.camera-box {
-  flex: 1;
-  background: #000;
-  border-radius: 12px;
-  border: 2px solid #334155;
+.simple-header {
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.feed-container {
   position: relative;
+  margin-top: 40px;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.camera-overlay {
+.camera-stream {
+  width: 100%;
+  display: block;
+  background-color: #000;
+}
+
+.overlay {
   position: absolute;
   bottom: 20px;
-  left: 20px;
-  background: rgba(0,0,0,0.6);
-  padding: 5px 15px;
-  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.capture-btn {
-  padding: 15px 30px;
-  background: linear-gradient(135deg, #38bdf8, #818cf8);
+.action-btn {
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: white;
   border: none;
   border-radius: 50px;
-  color: white;
   font-weight: bold;
   cursor: pointer;
-  align-self: center;
+  box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
 }
 
-.output-console {
-  background: #020617;
-  padding: 15px;
-  border-radius: 8px;
-  border-left: 4px solid #38bdf8;
-  height: 80px;
+.action-btn:hover {
+  background-color: #0056b3;
 }

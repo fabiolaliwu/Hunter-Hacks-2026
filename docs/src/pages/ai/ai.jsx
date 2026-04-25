@@ -1,40 +1,50 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './ai.css';
 
 const AI = () => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    // Function to start the camera
+    const startCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (err) {
+        console.error("Error accessing camera: ", err);
+      }
+    };
+
+    startCamera();
+
+    // Cleanup: Stop the camera when the component unmounts
+    return () => {
+      if (videoRef.current && videoRef.current.srcObject) {
+        const tracks = videoRef.current.srcObject.getTracks();
+        tracks.forEach(track => track.stop());
+      }
+    };
+  }, []);
+
   return (
-    <div className="ai-page">
-      <nav className="ai-nav">
-        <div className="logo">Vision<span>AI</span></div>
-        <div className="status">
-          <span className="dot"></span> System Live
+    <div className="simple-ai-page">
+      <header className="simple-header">
+        <h2>Capture what you want to know </h2>
+      </header>
+      
+      <main className="feed-container">
+        <video 
+          ref={videoRef} 
+          autoPlay 
+          playsInline 
+          className="camera-stream"
+        />
+        <div className="overlay">
+          <button className="action-btn">Analyze Scene</button>
         </div>
-      </nav>
-
-      <div className="ai-container">
-        <aside className="ai-sidebar">
-          <h3>Tools</h3>
-          <button className="tool-btn active">Object Detection</button>
-          <button className="tool-btn">Scene Description</button>
-          <button className="tool-btn">Text Recognition</button>
-        </aside>
-
-        <main className="ai-viewport">
-          <div className="camera-box">
-            {/* Camera feed or Gemini Vision output goes here */}
-            <div className="camera-overlay">
-              <p>Detecting environment...</p>
-            </div>
-          </div>
-          
-          <div className="ai-controls">
-            <button className="capture-btn">Analyze Scene</button>
-            <div className="output-console">
-              <p className="typing">Ready for input...</p>
-            </div>
-          </div>
-        </main>
-      </div>
+      </main>
     </div>
   );
 };
