@@ -28,8 +28,9 @@ export default function Landing() {
         </Link>
 
         <div className="header-right">
-          <span className="header-tag">NYC</span>
-          <span className="header-tag">2026</span>
+          <Link to="/profile" className="header-tag">
+            User Profile
+          </Link>
         </div>
       </header>
 
