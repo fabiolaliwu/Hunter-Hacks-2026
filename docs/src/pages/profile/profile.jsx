@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import "../landing/landing.css";
 import "./profile.css";
 
 // This waits a moment so fake API calls feel real.
@@ -205,43 +206,31 @@ export default function Profile() {
     setAuthMode("login");
   }
 
-  // This builds a small title for the top-right chip.
-  const authChipLabel = useMemo(() => {
-    if (account?.email) {
-      return account.email;
-    }
-
-    return authMode === "login" ? "LOGIN" : "SIGN UP";
-  }, [account, authMode]);
-
   return (
     <div className="profile-page">
-      <header className="profile-header">
-        <a href="/" className="profile-logo">HUNTERHACKS2026</a>
-        <div className="profile-header-right">
-          <span className="profile-header-tag">NYC</span>
-          <span className="profile-header-tag">{authChipLabel}</span>
-        </div>
+      <header className="header">
+        <a href="/" className="logo">HUNTERHACKS2026</a>
       </header>
 
       <main className="profile-main">
-        <section className="profile-hero">
+        <section className="hero">
           <div>
-            <div className="profile-label">[ PROFILE ]</div>
+            <div className="hero-label">[ PROFILE ]</div>
             <h1>
               YOUR<br />
-              CITY<br />
+              CITY, <br />
+              YOUR <br />
               <em>IDENTITY</em>
             </h1>
           </div>
 
-          <div className="profile-live-strip">
-            <span className="profile-live-dot"></span>
+          <div className="live-strip profile-live-strip">
+            <span className="live-dot"></span>
             <span>{account ? "AUTHENTICATED" : "AUTH REQUIRED"}</span>
           </div>
         </section>
 
-        <section className="profile-card">
+        <section className="card profile-card">
           {!account && (
             <>
               <div className="profile-auth-tabs">
@@ -274,7 +263,7 @@ export default function Profile() {
                     <input
                       type="email"
                       name="email"
-                      placeholder="you@hunter.cuny.edu"
+                      placeholder="email@hunter.cuny.edu"
                       value={loginForm.email}
                       onChange={handleLoginChange}
                     />
@@ -291,7 +280,7 @@ export default function Profile() {
                     />
                   </label>
 
-                  <button type="submit" className="profile-btn profile-btn-primary" disabled={loading}>
+                  <button type="submit" className="btn btn-primary profile-btn" disabled={loading}>
                     {loading ? "Submitting..." : "Login"}
                   </button>
                 </form>
@@ -313,7 +302,7 @@ export default function Profile() {
                     <input
                       type="email"
                       name="email"
-                      placeholder="you@hunter.cuny.edu"
+                      placeholder="email@hunter.cuny.edu"
                       value={registerForm.email}
                       onChange={handleRegisterChange}
                     />
@@ -341,7 +330,7 @@ export default function Profile() {
                     />
                   </label>
 
-                  <button type="submit" className="profile-btn profile-btn-primary" disabled={loading}>
+                  <button type="submit" className="btn btn-primary profile-btn" disabled={loading}>
                     {loading ? "Submitting..." : "Create Account"}
                   </button>
                 </form>
@@ -392,10 +381,10 @@ export default function Profile() {
               </label>
 
               <div className="profile-actions-row">
-                <button type="submit" className="profile-btn profile-btn-primary" disabled={loading}>
+                <button type="submit" className="btn btn-primary profile-btn" disabled={loading}>
                   {loading ? "Saving..." : "Save Profile"}
                 </button>
-                <button type="button" className="profile-btn profile-btn-secondary" onClick={handleLogout}>
+                <button type="button" className="btn btn-secondary profile-btn" onClick={handleLogout}>
                   Logout
                 </button>
               </div>
@@ -410,9 +399,9 @@ export default function Profile() {
         </section>
       </main>
 
-      <footer className="profile-footer">
+      <footer>
         <span>HUNTERHACKS2026 — NEW YORK CITY</span>
-        <span className="profile-footer-tag">OPEN TO ALL</span>
+        <span className="footer-tag">OPEN TO ALL</span>
       </footer>
     </div>
   );
