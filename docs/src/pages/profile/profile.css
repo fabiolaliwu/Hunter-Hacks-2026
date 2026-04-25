@@ -1,0 +1,259 @@
+.profile-page {
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: #f5f5f5;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid #222;
+}
+
+.profile-logo {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.profile-header-right {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-header-tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1px solid #333;
+  border-radius: 999px;
+  color: #aaa;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-main {
+  flex: 1;
+  padding: 50px 40px;
+}
+
+.profile-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.profile-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #888;
+  margin-bottom: 16px;
+}
+
+.profile-hero h1 {
+  font-size: 64px;
+  line-height: 0.95;
+  font-weight: 700;
+}
+
+.profile-hero em {
+  font-style: italic;
+  color: #999;
+}
+
+.profile-live-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #aaa;
+  border: 1px solid #333;
+  padding: 8px 12px;
+  border-radius: 999px;
+  margin-top: 12px;
+}
+
+.profile-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff3b30;
+}
+
+.profile-card {
+  margin-top: 34px;
+  border: 1px solid #222;
+  border-radius: 10px;
+  background: #111;
+  padding: 22px;
+  max-width: 700px;
+}
+
+.profile-auth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.profile-tab {
+  background: transparent;
+  color: #bbb;
+  border: 1px solid #333;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-tab:hover {
+  border-color: #555;
+  color: #fff;
+}
+
+.profile-tab.is-active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+.profile-form {
+  display: grid;
+  gap: 14px;
+}
+
+.profile-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  color: #bbb;
+  letter-spacing: 0.3px;
+}
+
+.profile-form input,
+.profile-form textarea {
+  width: 100%;
+  background: #0a0a0a;
+  color: #f5f5f5;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+  outline: 1px solid #707070;
+  border-color: #707070;
+}
+
+.profile-form textarea {
+  resize: vertical;
+}
+
+.profile-actions-row {
+  display: flex;
+  gap: 12px;
+}
+
+.profile-btn {
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.profile-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.profile-btn-primary {
+  background: #fff;
+  color: #000;
+}
+
+.profile-btn-primary:hover {
+  background: #ddd;
+}
+
+.profile-btn-secondary {
+  border: 1px solid #444;
+  color: #fff;
+  background: transparent;
+}
+
+.profile-btn-secondary:hover {
+  background: #171717;
+}
+
+.profile-status {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.profile-status.is-success {
+  background: rgba(31, 179, 85, 0.15);
+  border: 1px solid rgba(31, 179, 85, 0.35);
+  color: #99e3b3;
+}
+
+.profile-status.is-error {
+  background: rgba(255, 84, 84, 0.14);
+  border: 1px solid rgba(255, 84, 84, 0.35);
+  color: #ffc3c3;
+}
+
+.profile-footer {
+  margin-top: 40px;
+  padding: 20px 40px;
+  border-top: 1px solid #222;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #777;
+}
+
+.profile-footer-tag {
+  border: 1px solid #333;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+@media (max-width: 768px) {
+  .profile-header,
+  .profile-main,
+  .profile-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .profile-hero {
+    flex-direction: column;
+  }
+
+  .profile-hero h1 {
+    font-size: 46px;
+  }
+
+  .profile-card {
+    max-width: none;
+    padding: 18px;
+  }
+
+  .profile-actions-row {
+    flex-direction: column;
+  }
+}
