@@ -64,7 +64,7 @@ export default function Landing() {
         </div>
 
         <div className="actions">
-          <Link to="/camera" className="btn btn-primary">
+          <Link to="/ai" className="btn btn-primary">
             ◎ CAMERA
           </Link>
 

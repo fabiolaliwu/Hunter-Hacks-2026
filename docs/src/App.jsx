@@ -11,7 +11,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/ai" element={<AI />} />
         <Route path="/map" element={<Map />} />
-       {<Route path="/profile" element={<Profile />} />}
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
