@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.project-title {
+    padding-top: 0px;
+}
+
+.content {
+    margin-top: 80px;
+}
