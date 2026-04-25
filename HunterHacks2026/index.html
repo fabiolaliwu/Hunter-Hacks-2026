@@ -11,3 +11,39 @@
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="#" class="site-logo">home</a>
+  </div>
+</header>
+
+<main>
+  <section class="project">
+    <div class="project-label">
+    </div>
+    <div class="project-body">
+      <h2 class="project-title">h2 project title</h2>
+      <p class="project-dates"><span id="current-date"></span></p><p class="project-hours"><span id="current-time"></span></p>
+        <script>
+          // Date
+          const today = new Date();
+          document.getElementById('current-date').textContent = today.toDateString();
+        
+          // Time — updates every second
+          function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+          }
+          updateTime();
+          setInterval(updateTime, 1000);
+        </script>
+        <br>
+      
+      <p class="project-desc">
+        Our project description
+      </p>
+      <a href="learnmore.html"><u>camera</u> 。</a>
+      <a href="learnmore.html"><u>map</u> 。</a>
+    </div>
+  </section>
