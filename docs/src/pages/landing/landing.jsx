@@ -136,6 +136,7 @@ export default function Landing() {
     </Link>
   )}
 </div>
+</header>
       <main>
         <div className="hero">
           <div className="hero-label">[ For the Culture NYC ]</div>
