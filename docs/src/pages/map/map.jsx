@@ -18,9 +18,7 @@ const center = {
   lat: 40.7128,
   lng: -74.0060
 };
-const [activeFilter, setActiveFilter] = useState('food');
-const [borough, setBorough] = useState('All Boroughs');
-const [markers, setMarkers] = useState([]);
+
 const mapStyles = [
   { elementType: 'geometry', stylers: [{ color: '#0a0a0a' }] },
   { elementType: 'labels.text.stroke', stylers: [{ color: '#0a0a0a' }] },
@@ -41,12 +39,14 @@ const mapStyles = [
   { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#333' }] },
   { featureType: 'water', elementType: 'labels.text.stroke', stylers: [{ color: '#050505' }] },
 ];
-
-function MyMap() {
+  function MyMap() {
   const [foodBanks, setFoodBanks] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState(new Date());
+  const [activeFilter, setActiveFilter] = useState('food');  
+  const [borough, setBorough] = useState('All Boroughs');  
+  const [markers, setMarkers] = useState([]);         
 
 useEffect(() => {
   setLoading(true);
