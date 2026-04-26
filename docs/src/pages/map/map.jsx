@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import './map.css';
 
+const FILTERS = ['all', 'food', 'health', 'community'];
+const BOROUGHS = ['All Boroughs', 'Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'];
+const DATA_SOURCES = {
+  food: 'https://data.cityofnewyork.us/resource/if26-z6xq.json?$limit=500',
+  health: 'https://data.cityofnewyork.us/resource/b57a-rnmd.json?$limit=500',
+  community: 'https://data.cityofnewyork.us/resource/jp9i-3b7y.json?$limit=500',
+};
 const containerStyle = {
   width: '100%',
   height: '90vh',
