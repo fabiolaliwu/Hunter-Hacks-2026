@@ -11,12 +11,10 @@ const BOROUGH_CONFIG = {
   'All Boroughs': { lat: 40.7128, lng: -74.0060, zoom: 11 }
 };
 
-const FILTERS = ['all', 'food', 'transit','health', 'community'];
+const FILTERS = ['all', 'food', 'transit'];
 const BOROUGHS = ['All Boroughs', 'Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'];
 const DATA_SOURCES = {
-  food: 'https://data.cityofnewyork.us/resource/if26-z6xq.json?$limit=500',
-  health: 'https://data.cityofnewyork.us/resource/b57a-rnmd.json?$limit=500',
-  community: 'https://data.cityofnewyork.us/resource/jp9i-3b7y.json?$limit=500',
+   food: 'https://data.cityofnewyork.us/resource/if26-z6xq.json?$limit=500',
   transit: 'https://data.ny.gov/resource/39hk-dx4f.json',
 
 };
@@ -127,14 +125,11 @@ function MyMap() {
     setZoom(config.zoom);
   };
 
-  const FILTER_LABELS = {
-    all: 'All',
-    food: 'Food',
-    health: 'Health',
-    community: 'Community',
-    transit: 'Transit',
-  };
-
+const FILTER_LABELS = {
+  all: 'All',
+  food: 'Food',
+  transit: 'Transit',
+};
   return (
     <div className="map-page">
 
