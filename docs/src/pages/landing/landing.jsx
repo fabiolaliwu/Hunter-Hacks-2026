@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useLang } from '../../context/LanguageContext';
 import "./landing.css";
 
 const API_BASE = "http://localhost:3001/api";
@@ -18,7 +19,7 @@ export default function Landing() {
   const [time, setTime] = useState("");
   const [headerUserLabel, setHeaderUserLabel] = useState("Log In");
   const [hasAccount, setHasAccount] = useState(false);
-
+  const { lang, setLang } = useLang();
   const [index, setIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -109,19 +110,32 @@ export default function Landing() {
           HUNTERHACKS2026
         </Link>
 
-        <div className="header-right">
-          {hasAccount ? (
-            <button type="button" className="header-tag header-tag-btn" onClick={handleHeaderLogout}>
-              {headerUserLabel}
-            </button>
-          ) : (
-            <Link to="/profile" className="header-tag">
-              {headerUserLabel}
-            </Link>
-          )}
-        </div>
-      </header>
+       <div className="header-right">
+  <select
+    value={lang}
+    onChange={e => setLang(e.target.value)}
+    className="lang-select"
+  >
+    <option value="en">EN</option>
+    <option value="es">ES</option>
+    <option value="zh">中文</option>
+    <option value="bn">বাংলা</option>
+    <option value="ru">RU</option>
+    <option value="ht">HT</option>
+    <option value="ko">한국어</option>
+    <option value="ar">AR</option>
+  </select>
 
+  {hasAccount ? (
+    <button type="button" className="header-tag header-tag-btn" onClick={handleHeaderLogout}>
+      {headerUserLabel}
+    </button>
+  ) : (
+    <Link to="/profile" className="header-tag">
+      {headerUserLabel}
+    </Link>
+  )}
+</div>
       <main>
         <div className="hero">
           <div className="hero-label">[ For the Culture NYC ]</div>

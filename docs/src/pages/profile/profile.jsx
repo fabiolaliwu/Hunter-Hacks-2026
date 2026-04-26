@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../landing/landing.css";
+import { useLang } from '../../context/LanguageContext';
 import "./profile.css";
+
 
 // The base URL for your Express backend
 const API_BASE = "http://localhost:3001/api";
