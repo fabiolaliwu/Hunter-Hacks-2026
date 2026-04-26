@@ -39,40 +39,58 @@ const mapStyles = [
   { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#333' }] },
   { featureType: 'water', elementType: 'labels.text.stroke', stylers: [{ color: '#050505' }] },
 ];
-  function MyMap() {
+
+function MyMap() {
   const [foodBanks, setFoodBanks] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState(new Date());
-  const [activeFilter, setActiveFilter] = useState('food');  
-  const [borough, setBorough] = useState('All Boroughs');  
-  const [markers, setMarkers] = useState([]);         
+  const [activeFilter, setActiveFilter] = useState('food');
+  const [borough, setBorough] = useState('All Boroughs');
+  const [markers, setMarkers] = useState([]);
 
-useEffect(() => {
-  setLoading(true);
-  if (activeFilter === 'all') {
-    Promise.all(
-      Object.entries(DATA_SOURCES).map(([type, url]) =>
-        fetch(url).then(r => r.json()).then(data =>
-          data.map(item => ({ ...item, _type: type }))
+  useEffect(() => {
+    setLoading(true);
+    if (activeFilter === 'all') {
+      Promise.all(
+        Object.entries(DATA_SOURCES).map(([type, url]) =>
+          fetch(url).then(r => r.json()).then(data =>
+            data.map(item => ({ ...item, _type: type }))
+          )
         )
-      )
-    ).then(results => { setMarkers(results.flat()); setFoodBanks(results.flat()); setLoading(false); });
-  } else {
-    fetch(DATA_SOURCES[activeFilter])
-      .then(r => r.json())
-      .then(data => { setMarkers(data); setFoodBanks(data); setLoading(false); });
-  }
-  setSelected(null);
-}, [activeFilter]);
+      ).then(results => {
+        setMarkers(results.flat());
+        setFoodBanks(results.flat());
+        setLoading(false);
+      });
+    } else {
+      fetch(DATA_SOURCES[activeFilter])
+        .then(r => r.json())
+        .then(data => {
+          setMarkers(data);
+          setFoodBanks(data);
+          setLoading(false);
+        });
+    }
+    setSelected(null);
+  }, [activeFilter]);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
-const filtered = markers.filter(m =>
-  borough === 'All Boroughs' ? true : (m.borough || '').toLowerCase() === borough.toLowerCase()
-);
+
+  const filtered = markers.filter(m =>
+    borough === 'All Boroughs' ? true : (m.borough || '').toLowerCase() === borough.toLowerCase()
+  );
+
+  const FILTER_LABELS = {
+    all: 'All',
+    food: 'Food',
+    health: 'Health',
+    community: 'Community',
+  };
+
   return (
     <div className="map-page">
 
@@ -112,19 +130,53 @@ const filtered = markers.filter(m =>
         </p>
       </div>
 
+      {/* Filter Section */}
+      <div className="map-filter-section">
+        <p className="map-filter-label">02 — Filter Resources</p>
+
+        {/* Type Filter — segmented bar */}
+        <div className="map-filter-row">
+          {FILTERS.map(f => (
+            <button
+              key={f}
+              className={`map-filter-btn ${activeFilter === f ? 'active' : ''}`}
+              onClick={() => setActiveFilter(f)}
+            >
+              <span className="map-filter-dot" />
+              {FILTER_LABELS[f]}
+            </button>
+          ))}
+        </div>
+
+        {/* Borough Filter — pill chips */}
+        <div className="map-borough-row">
+          <span className="map-borough-label">Borough —</span>
+          {BOROUGHS.map(b => (
+            <button
+              key={b}
+              className={`map-borough-chip ${borough === b ? 'active' : ''}`}
+              onClick={() => setBorough(b)}
+            >
+              {b === 'All Boroughs' ? 'All' : b}
+            </button>
+          ))}
+        </div>
+
+        {/* Meta row — count + live indicator */}
+        <div className="map-filter-meta">
+          <div>
+            <span className="map-filter-count-num">{filtered.length}</span>
+            <span className="map-filter-count-label">Locations</span>
+          </div>
+          <div className="map-live-strip">
+            <span className="map-live-dot" />
+            <span>NYC Open Data</span>
+          </div>
+        </div>
+      </div>
+
       {/* Map */}
       <div className="map-wrapper">
-        <div className="map-filter-bar">
-  {FILTERS.map(f => (
-    <button key={f} className={`map-filter-btn ${activeFilter === f ? 'active' : ''}`} onClick={() => setActiveFilter(f)}>
-      {f === 'all' ? '⊕ All' : f === 'food' ? '🍎 Food' : f === 'health' ? '🏥 Health' : '🏛 Community'}
-    </button>
-  ))}
-  <select className="map-borough-select" value={borough} onChange={e => setBorough(e.target.value)}>
-    {BOROUGHS.map(b => <option key={b}>{b}</option>)}
-  </select>
-  <span className="map-filter-count">{filtered.length} locations</span>
-</div>
         {loading && (
           <div className="map-loading-overlay">
             <p className="map-loading-text">Loading sites...</p>
@@ -145,7 +197,7 @@ const filtered = markers.filter(m =>
               fullscreenControl: true,
             }}
           >
-            {foodBanks.map((bank, i) => {
+            {filtered.map((bank, i) => {
               const lat = parseFloat(bank.latitude);
               const lng = parseFloat(bank.longitude);
               if (!lat || !lng) return null;
@@ -206,11 +258,6 @@ const filtered = markers.filter(m =>
           <p className="map-card-num">02</p>
           <h3>Live Listings</h3>
           <p>Data is sourced directly from NYC Open Data and updated in real time for accuracy.</p>
-        </div>
-        <div className="map-card">
-          <p className="map-card-num">03</p>
-          <h3>Hours & Info</h3>
-          <p>Each marker includes operating hours, location details, and borough information.</p>
         </div>
       </div>
 
