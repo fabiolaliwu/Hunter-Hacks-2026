@@ -401,7 +401,6 @@ export default function Profile() {
 
       <footer>
         <span>HUNTERHACKS2026 — NEW YORK CITY</span>
-        <span className="footer-tag">OPEN TO ALL</span>
       </footer>
     </div>
   );

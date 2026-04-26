@@ -59,7 +59,7 @@ export default function Landing() {
           <p className="desc">
             To make the city we call home more accessible to all.
             Whether it be your first time here or if you've lived
-            here for a few years already.
+            here your whole life.
           </p>
         </div>
 
