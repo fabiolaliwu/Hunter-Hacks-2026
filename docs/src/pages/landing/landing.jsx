@@ -74,7 +74,7 @@ export default function Landing() {
 
       <main>
         <div className="hero">
-          <div className="hero-label">[ Nourish NYC ]</div>
+          <div className="hero-label">[ For the Culture NYC ]</div>
 
           <h1>
             MAKING<br />
@@ -131,7 +131,7 @@ export default function Landing() {
 
       <footer>
         <span>HUNTERHACKS2026 — NEW YORK CITY</span>
-        <span className="footer-tag">NYC</span>
+        <span className="footer-tag">For the Culture</span>
       </footer>
     </>
   );

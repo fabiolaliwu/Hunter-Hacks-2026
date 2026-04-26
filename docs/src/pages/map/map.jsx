@@ -366,7 +366,7 @@ function MyMap() {
 
       {/* Footer */}
       <footer className="map-footer">
-        <span>© {new Date().getFullYear()} FOODMAP NYC</span>
+        <span>© {new Date().getFullYear()} For the Culture NYC</span>
         <span className="map-footer-tag">Open Data</span>
       </footer>
 
