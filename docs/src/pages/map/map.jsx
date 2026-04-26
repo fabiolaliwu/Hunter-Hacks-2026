@@ -276,8 +276,8 @@ function MyMap() {
             )}
 
             {filtered.map((bank, i) => {
-              const lat = parseFloat(bank.latitude);
-              const lng = parseFloat(bank.longitude);
+              const lat = parseFloat(bank.latitude || bank.gtfs_latitude);
+              const lng = parseFloat(bank.longitude || bank.gtfs_longitude);
               if (!lat || !lng) return null;
               const isFoodSite = bank._type === 'food' || activeFilter === 'food';
               return (
