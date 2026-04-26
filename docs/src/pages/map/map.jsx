@@ -114,9 +114,18 @@ function MyMap() {
     return () => clearInterval(timer);
   }, []);
 
-  const filtered = markers.filter(m =>
-    borough === 'All Boroughs' ? true : (m.borough || '').toLowerCase() === borough.toLowerCase()
-  );
+const filtered = markers.filter(m => {
+  if (borough === 'All Boroughs') return true;
+  const BOROUGH_CODES = {
+    'Manhattan': 'M',
+    'Brooklyn': 'K', 
+    'Queens': 'Q',
+    'Bronx': 'X',
+    'Staten Island': 'S'
+  };
+  const b = (m.borough || '');
+  return b.toLowerCase() === borough.toLowerCase() || b === BOROUGH_CODES[borough];
+});
 
   const handleBoroughChange = (b) => {
     const config = BOROUGH_CONFIG[b];
@@ -279,27 +288,7 @@ const FILTER_LABELS = {
                 />
               );
             })}
-            {/* {filtered.map((bank, i) => {
-              const lat = parseFloat(bank.latitude);
-              const lng = parseFloat(bank.longitude);
-              if (!lat || !lng) return null;
-              return (
-                <Marker
-                  key={i}
-                  position={{ lat, lng }}
-                  onClick={() => setSelected(bank)}
-                  icon={{
-                    path: 'M 0,-1 A 1,1 0 1,1 0,1 A 1,1 0 1,1 0,-1',
-                    fillColor: '#ffffff',
-                    fillOpacity: 0.9,
-                    strokeColor: '#444',
-                    strokeWeight: 1,
-                    scale: 6,
-                  }}
-                />
-              );
-            })} */}
-
+            
             {selected && (
               <InfoWindow
                 position={{
