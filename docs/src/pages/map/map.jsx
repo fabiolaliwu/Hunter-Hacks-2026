@@ -8,7 +8,7 @@ const BOROUGH_CONFIG = {
   'Queens': { lat: 40.7282, lng: -73.7949, zoom: 12 },
   'Bronx': { lat: 40.8448, lng: -73.8648, zoom: 13 },
   'Staten Island': { lat: 40.5795, lng: -74.1502, zoom: 12 },
-  'All Boroughs': { lat: 40.7128, lng: -74.0060, zoom: 15 }
+  'All Boroughs': { lat: 40.7128, lng: -74.0060, zoom: 11 }
 };
 
 const FILTERS = ['all', 'food', 'health', 'community'];
@@ -81,15 +81,18 @@ function MyMap() {
   const [borough, setBorough] = useState('All Boroughs');
   const [markers, setMarkers] = useState([]);
   const [mapCenter, setMapCenter] = useState(defaultCenter);
+  const [userLocation, setUserLocation] = useState(null);
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           // If successful, update the mapCenter with real-time coordinates.
-          setMapCenter({
+          const pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
-          });
+          };
+          setMapCenter(pos);
+          setUserLocation(pos);
           setZoom(15);
         },
         () => {
@@ -254,12 +257,12 @@ function MyMap() {
               fullscreenControl: true,
             }}
           >
-            {mapCenter !== defaultCenter && (
+            {userLocation && (
               <Marker
-                position={mapCenter}
+                position={userLocation}
                 icon={{
                   path: 'M 0,-1 A 1,1 0 1,1 0,1 A 1,1 0 1,1 0,-1',
-                  fillColor: '#4285F4', // Google Maps Blue
+                  fillColor: '#4285F4',
                   fillOpacity: 1,
                   strokeColor: '#ffffff',
                   strokeWeight: 2,
