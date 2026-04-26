@@ -18,7 +18,9 @@ const center = {
   lat: 40.7128,
   lng: -74.0060
 };
-
+const [activeFilter, setActiveFilter] = useState('food');
+const [borough, setBorough] = useState('All Boroughs');
+const [markers, setMarkers] = useState([]);
 const mapStyles = [
   { elementType: 'geometry', stylers: [{ color: '#0a0a0a' }] },
   { elementType: 'labels.text.stroke', stylers: [{ color: '#0a0a0a' }] },
@@ -46,24 +48,31 @@ function MyMap() {
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState(new Date());
 
-  useEffect(() => {
-    fetch('https://data.cityofnewyork.us/resource/if26-z6xq.json')
-      .then(res => res.json())
-      .then(data => {
-        setFoodBanks(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching food banks:', err);
-        setLoading(false);
-      });
-  }, []);
+useEffect(() => {
+  setLoading(true);
+  if (activeFilter === 'all') {
+    Promise.all(
+      Object.entries(DATA_SOURCES).map(([type, url]) =>
+        fetch(url).then(r => r.json()).then(data =>
+          data.map(item => ({ ...item, _type: type }))
+        )
+      )
+    ).then(results => { setMarkers(results.flat()); setFoodBanks(results.flat()); setLoading(false); });
+  } else {
+    fetch(DATA_SOURCES[activeFilter])
+      .then(r => r.json())
+      .then(data => { setMarkers(data); setFoodBanks(data); setLoading(false); });
+  }
+  setSelected(null);
+}, [activeFilter]);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
-
+const filtered = markers.filter(m =>
+  borough === 'All Boroughs' ? true : (m.borough || '').toLowerCase() === borough.toLowerCase()
+);
   return (
     <div className="map-page">
 
@@ -105,6 +114,17 @@ function MyMap() {
 
       {/* Map */}
       <div className="map-wrapper">
+        <div className="map-filter-bar">
+  {FILTERS.map(f => (
+    <button key={f} className={`map-filter-btn ${activeFilter === f ? 'active' : ''}`} onClick={() => setActiveFilter(f)}>
+      {f === 'all' ? '⊕ All' : f === 'food' ? '🍎 Food' : f === 'health' ? '🏥 Health' : '🏛 Community'}
+    </button>
+  ))}
+  <select className="map-borough-select" value={borough} onChange={e => setBorough(e.target.value)}>
+    {BOROUGHS.map(b => <option key={b}>{b}</option>)}
+  </select>
+  <span className="map-filter-count">{filtered.length} locations</span>
+</div>
         {loading && (
           <div className="map-loading-overlay">
             <p className="map-loading-text">Loading sites...</p>
