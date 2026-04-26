@@ -162,7 +162,7 @@ const AI = () => {
 
       {/* Footer */}
       <footer className="map-footer">
-        <span>© {new Date().getFullYear()} FOODMAP NYC</span>
+        <span>© {new Date().getFullYear()} Nourish NYC</span>
         <span className="map-footer-tag">Gemini AI</span>
       </footer>
 

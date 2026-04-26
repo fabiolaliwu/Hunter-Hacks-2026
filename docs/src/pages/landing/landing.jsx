@@ -2,23 +2,61 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./landing.css";
 
+const phrases = [
+  "To make the city we call home more accessible to all. Whether it be your first time here or if you've lived here your whole life.",
+  "Para hacer la ciudad que llamamos hogar más accesible para todos. Ya sea tu primera vez aquí o si has vivido aquí toda tu vida.",
+  "让我们所称之为家的城市对所有人更加可及。无论你是第一次来到这里，还是在这里生活了一辈子。",
+  "Pour rendre la ville que nous appelons chez nous plus accessible à tous. Que ce soit votre première fois ici ou que vous y ayez vécu toute votre vie.",
+  "私たちが故郷と呼ぶ街を、すべての人にとってよりアクセスしやすくするために。初めて訪れる人でも、ずっと住んでいる人でも。",
+  "Сделать город, который мы называем домом, более доступным для всех. Будь то ваш первый визит сюда или вы прожили здесь всю жизнь."
+];
+
 export default function Landing() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const today = new Date();
     setDate(today.toDateString());
 
-    function tick() {
-      setTime(new Date().toLocaleTimeString());
-    }
-
+    const tick = () => setTime(new Date().toLocaleTimeString());
     tick();
     const interval = setInterval(tick, 1000);
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const current = phrases[index];
+
+    const baseSpeed = isDeleting ? 35 : 70;
+    const variance = Math.random() * 40;
+
+    const delay = baseSpeed + variance;
+
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        setText(current.slice(0, text.length + 1));
+      } else {
+        setText(current.slice(0, text.length - 1));
+      }
+
+      if (!isDeleting && text === current) {
+        setTimeout(() => setIsDeleting(true), 1500);
+      }
+
+      if (isDeleting && text === "") {
+        setIsDeleting(false);
+        setIndex((prev) => (prev + 1) % phrases.length);
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, index]);
 
   return (
     <>
@@ -57,9 +95,8 @@ export default function Landing() {
         <div className="desc-row">
           <div className="desc-num">001</div>
           <p className="desc">
-            To make the city we call home more accessible to all.
-            Whether it be your first time here or if you've lived
-            here your whole life.
+            {text}
+            <span className="cursor">|</span>
           </p>
         </div>
 
