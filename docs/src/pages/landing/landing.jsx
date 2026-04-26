@@ -36,7 +36,7 @@ export default function Landing() {
 
       <main>
         <div className="hero">
-          <div className="hero-label">[ HACKATHON ]</div>
+          <div className="hero-label">[ Nourish NYC ]</div>
 
           <h1>
             MAKING<br />
