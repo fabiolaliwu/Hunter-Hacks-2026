@@ -284,11 +284,11 @@ function MyMap() {
                   onClick={() => setSelected(bank)}
                   icon={isFoodSite ? {
                     url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-                        <text y="24" font-size="24">🍔</text>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                        <text y="16" font-size="16">🍔</text>
                       </svg>
                     `),
-                    scaledSize: new window.google.maps.Size(32, 32),
+                    scaledSize: new window.google.maps.Size(20, 20),
                   } : {
                     path: 'M 0,-1 A 1,1 0 1,1 0,1 A 1,1 0 1,1 0,-1',
                     fillColor: '#ffffff',
