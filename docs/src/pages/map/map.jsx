@@ -276,12 +276,20 @@ function MyMap() {
               const lat = parseFloat(bank.latitude);
               const lng = parseFloat(bank.longitude);
               if (!lat || !lng) return null;
+              const isFoodSite = bank._type === 'food' || activeFilter === 'food';
               return (
                 <Marker
                   key={i}
                   position={{ lat, lng }}
                   onClick={() => setSelected(bank)}
-                  icon={{
+                  icon={isFoodSite ? {
+                    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                        <text y="24" font-size="24">🍔</text>
+                      </svg>
+                    `),
+                    scaledSize: new window.google.maps.Size(32, 32),
+                  } : {
                     path: 'M 0,-1 A 1,1 0 1,1 0,1 A 1,1 0 1,1 0,-1',
                     fillColor: '#ffffff',
                     fillOpacity: 0.9,
@@ -292,7 +300,7 @@ function MyMap() {
                 />
               );
             })}
-            {filtered.map((bank, i) => {
+            {/* {filtered.map((bank, i) => {
               const lat = parseFloat(bank.latitude);
               const lng = parseFloat(bank.longitude);
               if (!lat || !lng) return null;
@@ -311,7 +319,7 @@ function MyMap() {
                   }}
                 />
               );
-            })}
+            })} */}
 
             {selected && (
               <InfoWindow
