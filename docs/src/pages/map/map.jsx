@@ -14,7 +14,7 @@ const containerStyle = {
   height: '90vh',
 };
 
-const center = {
+const defaultCenter = {
   lat: 40.7128,
   lng: -74.0060
 };
@@ -48,6 +48,23 @@ function MyMap() {
   const [activeFilter, setActiveFilter] = useState('food');
   const [borough, setBorough] = useState('All Boroughs');
   const [markers, setMarkers] = useState([]);
+  const [mapCenter, setMapCenter] = useState(defaultCenter);
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // If successful, update the mapCenter with real-time coordinates.
+          setMapCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        () => {
+          console.log("Geolocation permission denied or error. Using default center.");
+        }
+      );
+    }
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -186,8 +203,8 @@ function MyMap() {
           <GoogleMap
             mapContainerStyle={containerStyle}
             mapContainerClassName="map-container"
-            center={center}
-            zoom={11}
+            center={mapCenter}
+            zoom={15}
             options={{
               styles: mapStyles,
               disableDefaultUI: false,
