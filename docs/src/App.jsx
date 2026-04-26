@@ -6,13 +6,11 @@ import Profile from "./pages/profile/profile";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/ai" element={<AI />} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/ai" element={<AI />} />
+      <Route path="/map" element={<Map />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   );
 }
