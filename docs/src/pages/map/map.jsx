@@ -324,12 +324,12 @@ const FILTER_LABELS = {
         <div className="map-card">
           <p className="map-card-num">01</p>
           <h3>Food Drop-Off</h3>
-          <p>Locate community food scrap drop-off sites across all five boroughs of New York City.</p>
+          <p>Locate community food drop-off sites across all the five boroughs of New York City.</p>
         </div>
         <div className="map-card">
           <p className="map-card-num">02</p>
           <h3>Live Listings</h3>
-          <p>Data is sourced directly from NYC Open Data and updated in real time for accuracy.</p>
+          <p>Data is sourced directly from NYC Open Data and updated in real time.</p>
         </div>
       </div>
 

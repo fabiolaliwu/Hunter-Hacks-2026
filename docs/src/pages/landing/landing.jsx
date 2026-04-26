@@ -163,15 +163,15 @@ export default function Landing() {
         <div className="cards">
           <div className="card">
             <div className="card-num">01 —</div>
-            <h3>EXPLORE THE CITY</h3>
+            <h3>EXPLORE YOUR CITY</h3>
             <p>
-              Point your camera at anything around you and get instant context about what you're seeing.
+              Point your camera at anything around you and get instant info about what you're seeing.
             </p>
           </div>
 
           <div className="card">
             <div className="card-num">02 —</div>
-            <h3>NAVIGATE WITH EASE</h3>
+            <h3>NAVIGATE YOUR CITY</h3>
             <p>
               Discover accessible routes, nearby landmarks, and local tips through an interactive map.
             </p>

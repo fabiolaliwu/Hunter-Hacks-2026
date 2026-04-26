@@ -121,7 +121,7 @@ const AI = () => {
       <div className="map-desc-row">
         <span className="map-desc-num">01</span>
         <p className="map-desc">
-          Point your camera at any scene and let Gemini 2.5 Flash analyze and describe what it sees in real time.
+          Point your camera at any scene and let Gemini 2.5 Flash analyze and describe what you both see in real time.
         </p>
       </div>
 
@@ -167,23 +167,23 @@ const AI = () => {
         <div className="map-card">
           <p className="map-card-num">01</p>
           <h3>Live Capture</h3>
-          <p>Snap a frame directly from your camera feed with a single click.</p>
+          <p>Snap a picture from your camera with a single click.</p>
         </div>
         <div className="map-card">
           <p className="map-card-num">02</p>
           <h3>Gemini Vision</h3>
-          <p>Powered by Gemini 2.5 Flash for fast, accurate multimodal scene understanding.</p>
+          <p>Powered by Gemini 2.5 Flash for fast scene understanding.</p>
         </div>
         <div className="map-card">
           <p className="map-card-num">03</p>
           <h3>Instant Results</h3>
-          <p>Get a concise natural language description of your scene in seconds.</p>
+          <p>Get a easy to read description of your scene in just seconds.</p>
         </div>
       </div>
 
       {/* Footer */}
       <footer className="map-footer">
-        <span>© {new Date().getFullYear()} Nourish NYC</span>
+        <span>© {new Date().getFullYear()} For the Culture NYC</span>
         <span className="map-footer-tag">Gemini AI</span>
       </footer>
 
