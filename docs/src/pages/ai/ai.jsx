@@ -39,16 +39,37 @@ const AI = () => {
       canvas.height = videoRef.current.videoHeight;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(videoRef.current, 0, 0);
-
       const base64Image = canvas.toDataURL("image/jpeg").split(",")[1];
 
+
+
+
+
+      // testing purposes
+      // const base64Image = await new Promise((resolve) => {
+      //   const img = new Image();
+      //   img.src = "/empire.jpg"; 
+      //   img.onload = () => {
+      //     const canvas = document.createElement("canvas");
+      //     canvas.width = img.width; canvas.height = img.height;
+      //     canvas.getContext("2d").drawImage(img, 0, 0);
+      //     resolve(canvas.toDataURL("image/jpeg").split(",")[1]);
+      //   };
+      // });
+
+
+
+
+
+
+
       const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.5-flash-lite",
         contents: [
           {
             role: "user",
             parts: [
-              { text: "Describe this scene briefly." },
+              { text: "Identify any landmarks, buildings, or cultural items in this image. Provide: A brief overview of what this is. Two fascinating historical facts or 'hidden secrets' about this spot. Keep it short." },
               {
                 inlineData: {
                   data: base64Image,
