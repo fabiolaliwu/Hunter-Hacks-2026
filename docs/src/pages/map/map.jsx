@@ -273,7 +273,7 @@ const FILTER_LABELS = {
                   icon={isFoodSite ? {
                     url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                        <text y="16" font-size="16">🍔</text>
+                        <text y="16" font-size="16">📍</text>
                       </svg>
                     `),
                     scaledSize:{ width: 20, height: 20 },
