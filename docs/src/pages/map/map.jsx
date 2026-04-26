@@ -30,26 +30,7 @@ const defaultCenter = {
   lng: -74.0060
 };
 
-// const mapStyles = [
-//   { elementType: 'geometry', stylers: [{ color: '#0a0a0a' }] },
-//   { elementType: 'labels.text.stroke', stylers: [{ color: '#0a0a0a' }] },
-//   { elementType: 'labels.text.fill', stylers: [{ color: '#555' }] },
-//   { featureType: 'administrative.locality', elementType: 'labels.text.fill', stylers: [{ color: '#888' }] },
-//   { featureType: 'poi', elementType: 'labels.text.fill', stylers: [{ color: '#555' }] },
-//   { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#111' }] },
-//   { featureType: 'poi.park', elementType: 'labels.text.fill', stylers: [{ color: '#444' }] },
-//   { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#1a1a1a' }] },
-//   { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#222' }] },
-//   { featureType: 'road', elementType: 'labels.text.fill', stylers: [{ color: '#666' }] },
-//   { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#222' }] },
-//   { featureType: 'road.highway', elementType: 'geometry.stroke', stylers: [{ color: '#333' }] },
-//   { featureType: 'road.highway', elementType: 'labels.text.fill', stylers: [{ color: '#777' }] },
-//   { featureType: 'transit', elementType: 'geometry', stylers: [{ color: '#111' }] },
-//   { featureType: 'transit.station', elementType: 'labels.text.fill', stylers: [{ color: '#555' }] },
-//   { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#050505' }] },
-//   { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#333' }] },
-//   { featureType: 'water', elementType: 'labels.text.stroke', stylers: [{ color: '#050505' }] },
-// ];
+
 
 const mapStyles = [
   { elementType: 'geometry', stylers: [{ color: '#f5f5f5' }] },
@@ -327,19 +308,20 @@ function MyMap() {
             {selected && (
               <InfoWindow
                 position={{
-                  lat: parseFloat(selected.latitude),
-                  lng: parseFloat(selected.longitude),
-                }}
+  lat: parseFloat(selected.latitude || selected.gtfs_latitude),
+  lng: parseFloat(selected.longitude || selected.gtfs_longitude),
+}}
                 onCloseClick={() => setSelected(null)}
               >
                 <div className="map-info-window">
                   <p className="map-info-num">SITE INFO</p>
                   <h3 className="map-info-title">
-                    {selected.food_scrap_drop_off_site || 'Food Site'}
+                    {selected.food_scrap_drop_off_site || selected.stop_name || 'Location'}
                   </h3>
-                  {selected.location && (
-                    <p className="map-info-detail">{selected.location}</p>
-                  )}
+                 
+                  {(selected.location || selected.daytime_routes) && (
+  <p className="map-info-detail">{selected.location || selected.daytime_routes}</p>
+)}
                   {selected.borough && (
                     <span className="map-info-badge">{selected.borough}</span>
                   )}
