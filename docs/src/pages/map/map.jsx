@@ -276,7 +276,7 @@ const FILTER_LABELS = {
                         <text y="16" font-size="16">🍔</text>
                       </svg>
                     `),
-                    scaledSize: new window.google.maps.Size(20, 20),
+                    scaledSize:{ width: 20, height: 20 },
                   } : {
                     path: 'M 0,-1 A 1,1 0 1,1 0,1 A 1,1 0 1,1 0,-1',
                     fillColor: '#ffffff',
