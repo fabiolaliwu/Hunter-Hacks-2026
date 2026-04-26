@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import './map.css';
 
+const BOROUGH_CONFIG = {
+  'Manhattan': { lat: 40.7831, lng: -73.9712, zoom: 13 },
+  'Brooklyn': { lat: 40.6782, lng: -73.9442, zoom: 12 },
+  'Queens': { lat: 40.7282, lng: -73.7949, zoom: 12 },
+  'Bronx': { lat: 40.8448, lng: -73.8648, zoom: 13 },
+  'Staten Island': { lat: 40.5795, lng: -74.1502, zoom: 12 },
+  'All Boroughs': { lat: 40.7128, lng: -74.0060, zoom: 15 }
+};
+
 const FILTERS = ['all', 'food', 'health', 'community'];
 const BOROUGHS = ['All Boroughs', 'Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'];
 const DATA_SOURCES = {
@@ -63,6 +72,7 @@ const mapStyles = [
 
 
 function MyMap() {
+  const [zoom, setZoom] = useState(11);
   const [foodBanks, setFoodBanks] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -80,6 +90,7 @@ function MyMap() {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
+          setZoom(15);
         },
         () => {
           console.log("Geolocation permission denied or error. Using default center.");
@@ -122,6 +133,13 @@ function MyMap() {
   const filtered = markers.filter(m =>
     borough === 'All Boroughs' ? true : (m.borough || '').toLowerCase() === borough.toLowerCase()
   );
+
+  const handleBoroughChange = (b) => {
+    const config = BOROUGH_CONFIG[b];
+    setBorough(b);
+    setMapCenter({ lat: config.lat, lng: config.lng });
+    setZoom(config.zoom);
+  };
 
   const FILTER_LABELS = {
     all: 'All',
@@ -194,7 +212,7 @@ function MyMap() {
             <button
               key={b}
               className={`map-borough-chip ${borough === b ? 'active' : ''}`}
-              onClick={() => setBorough(b)}
+              onClick={() => handleBoroughChange(b)}
             >
               {b === 'All Boroughs' ? 'All' : b}
             </button>
@@ -226,7 +244,7 @@ function MyMap() {
             mapContainerStyle={containerStyle}
             mapContainerClassName="map-container"
             center={mapCenter}
-            zoom={15}
+            zoom={zoom}
             options={{
               styles: mapStyles,
               disableDefaultUI: false,
@@ -236,6 +254,41 @@ function MyMap() {
               fullscreenControl: true,
             }}
           >
+            {mapCenter !== defaultCenter && (
+              <Marker
+                position={mapCenter}
+                icon={{
+                  path: 'M 0,-1 A 1,1 0 1,1 0,1 A 1,1 0 1,1 0,-1',
+                  fillColor: '#4285F4', // Google Maps Blue
+                  fillOpacity: 1,
+                  strokeColor: '#ffffff',
+                  strokeWeight: 2,
+                  scale: 8, 
+                }}
+                zIndex={1000} 
+              />
+            )}
+
+            {filtered.map((bank, i) => {
+              const lat = parseFloat(bank.latitude);
+              const lng = parseFloat(bank.longitude);
+              if (!lat || !lng) return null;
+              return (
+                <Marker
+                  key={i}
+                  position={{ lat, lng }}
+                  onClick={() => setSelected(bank)}
+                  icon={{
+                    path: 'M 0,-1 A 1,1 0 1,1 0,1 A 1,1 0 1,1 0,-1',
+                    fillColor: '#ffffff',
+                    fillOpacity: 0.9,
+                    strokeColor: '#444',
+                    strokeWeight: 1,
+                    scale: 6,
+                  }}
+                />
+              );
+            })}
             {filtered.map((bank, i) => {
               const lat = parseFloat(bank.latitude);
               const lng = parseFloat(bank.longitude);
