@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./landing.css";
 
+const API_BASE = "http://localhost:3001/api";
+
 const phrases = [
   "To make the city we call home more accessible to all. Whether it be your first time here or if you've lived here your whole life.",
   "Para hacer la ciudad que llamamos hogar más accesible para todos. Ya sea tu primera vez aquí o si has vivido aquí toda tu vida.",
@@ -14,6 +16,8 @@ const phrases = [
 export default function Landing() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [headerUserLabel, setHeaderUserLabel] = useState("Log In");
+  const [hasAccount, setHasAccount] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [text, setText] = useState("");
@@ -29,6 +33,46 @@ export default function Landing() {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("profile_account");
+    if (!saved) {
+      setHasAccount(false);
+      setHeaderUserLabel("Log In");
+      return;
+    }
+
+    try {
+      const account = JSON.parse(saved);
+      const username = account?.name?.trim() || account?.email?.split("@")?.[0]?.trim();
+      if (username) {
+        setHeaderUserLabel(username);
+        setHasAccount(true);
+      } else {
+        setHasAccount(false);
+        setHeaderUserLabel("Log In");
+      }
+    } catch {
+      setHasAccount(false);
+      setHeaderUserLabel("Log In");
+    }
+  }, []);
+
+  async function handleHeaderLogout() {
+    try {
+      await fetch(`${API_BASE}/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch {
+      // Continue local logout even if request fails.
+    }
+
+    localStorage.removeItem("profile_account");
+    setHasAccount(false);
+    setHeaderUserLabel("Log In");
+    window.location.assign("/");
+  }
 
   useEffect(() => {
     const current = phrases[index];
@@ -66,9 +110,15 @@ export default function Landing() {
         </Link>
 
         <div className="header-right">
-          <Link to="/profile" className="header-tag">
-            User Profile
-          </Link>
+          {hasAccount ? (
+            <button type="button" className="header-tag header-tag-btn" onClick={handleHeaderLogout}>
+              {headerUserLabel}
+            </button>
+          ) : (
+            <Link to="/profile" className="header-tag">
+              {headerUserLabel}
+            </Link>
+          )}
         </div>
       </header>
 

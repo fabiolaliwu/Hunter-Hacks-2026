@@ -24,6 +24,23 @@ function tokenLifetime() {
   return process.env.JWT_EXPIRES_IN || "7d";
 }
 
+function authCookieName() {
+  return process.env.JWT_COOKIE_NAME || "auth_token";
+}
+
+function authCookieMaxAgeMs() {
+  const value = Number(process.env.JWT_COOKIE_MAX_AGE_MS);
+  if (Number.isFinite(value) && value > 0) {
+    return value;
+  }
+
+  return 7 * 24 * 60 * 60 * 1000;
+}
+
+function shouldUseSecureCookies() {
+  return process.env.NODE_ENV === "production";
+}
+
 function pickSafeUser(user) {
   return {
     id: String(user._id),
@@ -43,6 +60,47 @@ function getBearerToken(authHeader = "") {
   }
 
   return authHeader.slice("Bearer ".length).trim();
+}
+
+function parseCookies(cookieHeader = "") {
+  const cookies = {};
+
+  for (const pair of cookieHeader.split(";")) {
+    const [rawKey, ...rest] = pair.split("=");
+    const key = rawKey?.trim();
+    if (!key) continue;
+    cookies[key] = decodeURIComponent(rest.join("=").trim());
+  }
+
+  return cookies;
+}
+
+function getCookieToken(cookieHeader = "") {
+  const cookies = parseCookies(cookieHeader);
+  return cookies[authCookieName()] || null;
+}
+
+function getRequestToken(req) {
+  return getCookieToken(req.headers.cookie) || getBearerToken(req.headers.authorization);
+}
+
+function setAuthCookie(res, token) {
+  res.cookie(authCookieName(), token, {
+    httpOnly: true,
+    secure: shouldUseSecureCookies(),
+    sameSite: "lax",
+    maxAge: authCookieMaxAgeMs(),
+    path: "/",
+  });
+}
+
+function clearAuthCookie(res) {
+  res.clearCookie(authCookieName(), {
+    httpOnly: true,
+    secure: shouldUseSecureCookies(),
+    sameSite: "lax",
+    path: "/",
+  });
 }
 
 router.post("/createUser", async (req, res) => {
@@ -76,6 +134,7 @@ router.post("/createUser", async (req, res) => {
     const token = jwt.sign({ sub: String(insert.insertedId), email: normalizedEmail }, getJwtSecret(), {
       expiresIn: tokenLifetime(),
     });
+    setAuthCookie(res, token);
 
     return res.status(201).json({ ok: true, token, user: pickSafeUser(user) });
   } catch (error) {
@@ -108,6 +167,7 @@ router.post("/getUser", async (req, res) => {
     const token = jwt.sign({ sub: String(user._id), email: user.email }, getJwtSecret(), {
       expiresIn: tokenLifetime(),
     });
+    setAuthCookie(res, token);
 
     return res.status(200).json({ ok: true, token, user: pickSafeUser(user) });
   } catch (error) {
@@ -115,12 +175,37 @@ router.post("/getUser", async (req, res) => {
   }
 });
 
-router.get("/getPreferences", async (req, res) => {
+router.get("/me", async (req, res) => {
   try {
-    const token = getBearerToken(req.headers.authorization);
+    const token = getRequestToken(req);
 
     if (!token) {
-      return res.status(401).json({ ok: false, message: "Missing bearer token." });
+      return res.status(401).json({ ok: false, message: "Missing auth token." });
+    }
+
+    const payload = jwt.verify(token, getJwtSecret());
+    const users = await getUsersCollection();
+    const user = await users.findOne(
+      { _id: new ObjectId(payload.sub) },
+      { projection: { email: 1, name: 1 } }
+    );
+
+    if (!user) {
+      return res.status(404).json({ ok: false, message: "User not found." });
+    }
+
+    return res.status(200).json({ ok: true, user: pickSafeUser(user) });
+  } catch (error) {
+    return res.status(401).json({ ok: false, message: error.message });
+  }
+});
+
+router.get("/getPreferences", async (req, res) => {
+  try {
+    const token = getRequestToken(req);
+
+    if (!token) {
+      return res.status(401).json({ ok: false, message: "Missing auth token." });
     }
 
     const payload = jwt.verify(token, getJwtSecret());
@@ -139,10 +224,10 @@ router.get("/getPreferences", async (req, res) => {
 
 router.post("/setPreference", async (req, res) => {
   try {
-    const token = getBearerToken(req.headers.authorization);
+    const token = getRequestToken(req);
 
     if (!token) {
-      return res.status(401).json({ ok: false, message: "Missing bearer token." });
+      return res.status(401).json({ ok: false, message: "Missing auth token." });
     }
 
     const { key, value } = req.body ?? {};
@@ -168,6 +253,15 @@ router.post("/setPreference", async (req, res) => {
     return res.status(200).json({ ok: true, preferences: user?.preferences || {} });
   } catch (error) {
     return res.status(401).json({ ok: false, message: error.message });
+  }
+});
+
+router.post("/logout", (req, res) => {
+  try {
+    clearAuthCookie(res);
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    return res.status(500).json({ ok: false, message: error.message });
   }
 });
 

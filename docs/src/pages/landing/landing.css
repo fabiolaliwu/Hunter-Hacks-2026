@@ -38,6 +38,13 @@
     border: 1px solid #333;
     border-radius: 999px;
     color: #aaa;
+    background: transparent;
+    text-decoration: none;
+  }
+
+  .header-tag-btn {
+    cursor: pointer;
+    font: inherit;
   }
   
   /* Hero Section */
