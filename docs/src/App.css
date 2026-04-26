@@ -182,3 +182,12 @@
     border-right-color: var(--border);
   }
 }
+.lang-select {
+  background: transparent;
+  border: 1px solid #333;
+  color: inherit;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  cursor: pointer;
+}

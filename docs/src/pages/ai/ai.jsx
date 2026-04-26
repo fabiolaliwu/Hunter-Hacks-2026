@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GoogleGenAI } from "@google/genai";
+import { useLang } from '../../context/LanguageContext';
 import './ai.css';
 
 const AI = () => {

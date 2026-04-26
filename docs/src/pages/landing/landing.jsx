@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useLang } from '../../context/LanguageContext';
 import "./landing.css";
 
 const API_BASE = "http://localhost:3001/api";

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import { useLang } from '../../context/LanguageContext';
 import './map.css';
 
 const BOROUGH_CONFIG = {
@@ -63,6 +64,7 @@ function MyMap() {
   const [markers, setMarkers] = useState([]);
   const [mapCenter, setMapCenter] = useState(defaultCenter);
   const [userLocation, setUserLocation] = useState(null);
+  const { lang, setLang, t } = useLang();
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -143,12 +145,26 @@ const FILTER_LABELS = {
     <div className="map-page">
 
       {/* Header */}
-      <header className="map-header">
-        <a href="/" className="map-logo">HUNTERHACKS2026</a>
-        <div className="map-header-right">
-          <span className="map-header-tag">{foodBanks.length} Sites</span>
-        </div>
-      </header>
+    <header className="map-header">
+  <a href="/" className="map-logo">HUNTERHACKS2026</a>
+  <div className="map-header-right">
+    <select
+      value={lang}
+      onChange={e => setLang(e.target.value)}
+      className="lang-select"
+    >
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+      <option value="zh">中文</option>
+      <option value="bn">বাংলা</option>
+      <option value="ru">RU</option>
+      <option value="ht">HT</option>
+      <option value="ko">한국어</option>
+      <option value="ar">AR</option>
+    </select>
+    <span className="map-header-tag">{foodBanks.length} Sites</span>
+  </div>
+</header>
 
       {/* Hero */}
       <div className="map-hero">
